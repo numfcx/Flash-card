@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flash Card Game (with Real NES Sound)</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    img {
+      width: 300px;
+      height: auto;
+      border: 3px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Flash Card Game (Real NES Sound)</h2>
+  <img id="flashImage" src="card1.png" alt="flash card">
+  <br>
+  <button onclick="toggle()">Start / Stop</button>
+
+  <audio id="bgSound" src="bg.wav" loop></audio>
+  <audio id="startSound" src="start.wav"></audio>
+  <audio id="stopSound" src="stop.wav"></audio>
+
+  <script>
+    const images = ['card1.png', 'card2.png', 'card3.png', 'card4.png', 'card5.png', 'card6.png', 'card7.png', 'card8.png', 'card9.png', 'card10.png'];
+    let intervalId = null;
+
+    function start() {
+      document.getElementById("startSound").play();
+      document.getElementById("bgSound").play();
+      intervalId = setInterval(() => {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        document.getElementById("flashImage").src = images[randomIndex];
+      }, 100);
+    }
+
+    function stop() {
+      clearInterval(intervalId);
+      intervalId = null;
+      document.getElementById("stopSound").play();
+      document.getElementById("bgSound").pause();
+      document.getElementById("bgSound").currentTime = 0;
+    }
+
+    function toggle() {
+      if (intervalId === null) {
+        start();
+      } else {
+        stop();
+      }
+    }
+  </script>
+
+</body>
+</html>
